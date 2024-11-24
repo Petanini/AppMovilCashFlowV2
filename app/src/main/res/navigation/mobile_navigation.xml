@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/navigation_reports"
-        android:name="com.example.cashflowandroidapp.ui.registerMov.RegisterMovFragment"
+        android:name="com.example.cashflowandroidapp.ui.reports.ReportsFragment"
         android:label="@string/nav_reportes"
         tools:layout="@layout/fragment_reports" />
 </navigation>

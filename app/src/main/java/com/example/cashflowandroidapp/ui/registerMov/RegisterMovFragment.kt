@@ -165,7 +165,7 @@ class RegisterMovFragment : Fragment() {
 
         btnGuardar.setOnClickListener {
             if (validarCampos()) {
-                val movimiento = MovementInsert(
+                var movimiento = MovementInsert(
                     fieldConceptos.text.toString(),
                     idCuenta,
                     dateselector.text.toString(),
@@ -173,21 +173,24 @@ class RegisterMovFragment : Fragment() {
                     radiosOpt.checkedRadioButtonId
                 )
 
-                // Llamada al ViewModel para guardar el movimiento
+                println("Movimiento a enviar: $movimiento")
                 registerMovViewModel.addMovement(movimiento)
 
-                // Observa el resultado del registro
                 registerMovViewModel.movementRegistered.observe(viewLifecycleOwner) { result ->
                     if (result != null) {
 
                         Toast.makeText(requireContext(), "Movimiento guardado con éxito", Toast.LENGTH_SHORT).show()
+                        fieldConceptos.text.clear()
+                        dateselector.text = ""
+                        txtMonto.text = ""
+                        txtObservaciones.text = ""
+                        radiosOpt.clearCheck()
                     } else {
 
                         Toast.makeText(requireContext(), "Error al guardar el movimiento", Toast.LENGTH_SHORT).show()
                     }
                 }
             } else {
-                // Validación fallida
                 Toast.makeText(requireContext(), "Por favor, completa todos los campos correctamente", Toast.LENGTH_SHORT).show()
             }
         }
