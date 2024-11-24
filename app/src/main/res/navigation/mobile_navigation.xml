@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.example.cashflowandroidapp.ui.users.UsersFragment"
+        android:label="@string/nav_usuario"
+        tools:layout="@layout/fragment_users" />
+
+    <fragment
+        android:id="@+id/navigation_dashboard"
+        android:name="com.example.cashflowandroidapp.ui.transactions.TransactionsFragment"
+        android:label="@string/nav_movimientos"
+        tools:layout="@layout/fragment_transactions" />
+
+    <fragment
+        android:id="@+id/navigation_notifications"
+        android:name="com.example.cashflowandroidapp.ui.registerMov.RegisterMovFragment"
+        android:label="@string/nav_registro"
+        tools:layout="@layout/fragment_registermov" />
+
+    <fragment
+        android:id="@+id/navigation_reports"
+        android:name="com.example.cashflowandroidapp.ui.registerMov.RegisterMovFragment"
+        android:label="@string/nav_reportes"
+        tools:layout="@layout/fragment_reports" />
+</navigation>
