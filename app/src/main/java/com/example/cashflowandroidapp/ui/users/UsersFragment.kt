@@ -4,16 +4,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.cashflowandroidapp.data.interfaces.RecyclerViewEvent
+import com.example.cashflowandroidapp.data.model.entities.CntBancosResponse
 import com.example.cashflowandroidapp.databinding.FragmentUsersBinding
 
-class UsersFragment : Fragment() {
+class UsersFragment : Fragment(), RecyclerViewEvent {
 
     private var _binding: FragmentUsersBinding? = null
     private val userviewmodel: UsersViewModel by viewModels()
+    private var miListener: RecyclerViewEvent = this
+    private var miListaCuentas: List<CntBancosResponse>? = null
+
+    private var idBank : Int = 0
 
 
     // This property is only valid between onCreateView and
@@ -44,6 +51,7 @@ class UsersFragment : Fragment() {
             Cuenta("SCOTIABANK AREQUIPA", "**** **** **** 9876", "$750.00")
         )*/
         userviewmodel.listOfCuentas.observe(viewLifecycleOwner) { listaCuentas ->
+            miListaCuentas = listaCuentas
             var montoTotal = 0.0
 
             listaCuentas?.forEach { cuenta ->
@@ -58,16 +66,37 @@ class UsersFragment : Fragment() {
 
 
             binding.recyclerViewCuentas.apply {
-                adapter = CuentaAdapter(listaCuentas ?: emptyList())
+                adapter = CuentaAdapter(listaCuentas ?: emptyList(), miListener)
                 layoutManager = LinearLayoutManager(requireContext())
             }
         }
 
         userviewmodel.fetchCuentas(1)
+
+        _binding?.viewMovementButton?.setOnClickListener(View.OnClickListener {
+            if(idBank == 0){
+                Toast.makeText(requireContext(), "Debes seleccionar un banco", Toast.LENGTH_LONG).show()
+            } else{
+
+            }
+        })
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onItemClick(Position: Int) {
+        val cuenta = miListaCuentas?.get(Position)
+
+        if (cuenta != null) {
+            if(_binding != null){
+                _binding!!.txtAccName.text = cuenta.egre_banc_nomb_alte + " :"
+                _binding!!.txtAccName.textSize = 20f
+                _binding!!.balanceAmount.text = cuenta.cuenta_monto + " $"
+                idBank = cuenta.id_egre_banc
+            }
+        }
     }
 }

@@ -5,21 +5,33 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cashflowandroidapp.R
+import com.example.cashflowandroidapp.data.interfaces.RecyclerViewEvent
 import com.example.cashflowandroidapp.data.model.entities.CntBancosResponse
 import retrofit2.Response
 
-class CuentaAdapter(private val cuentas: List<CntBancosResponse>) : RecyclerView.Adapter<CuentaAdapter.CuentaViewHolder>() {
+class CuentaAdapter(private val cuentas: List<CntBancosResponse>, private val listener: RecyclerViewEvent) : RecyclerView.Adapter<CuentaAdapter.CuentaViewHolder>() {
 
 
-    inner class CuentaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class CuentaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val nombreBanco: TextView = itemView.findViewById(R.id.bankName)
         val numeroCuenta: TextView = itemView.findViewById(R.id.bankNumber)
         val balanceCuenta: TextView = itemView.findViewById(R.id.bankBalance)
+
+        init {
+            itemView.setOnClickListener(this)
+        }
+        override fun onClick(v: View?) {
+            val position = adapterPosition
+            if(position != RecyclerView.NO_POSITION){
+                listener.onItemClick(position)
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CuentaViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.lista_cuenta_card, parent, false)
+
         return CuentaViewHolder(view)
     }
 

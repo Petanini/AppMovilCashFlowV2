@@ -16,6 +16,7 @@ class TransactionsFragment : Fragment() {
 
     private var _binding: FragmentTransactionsBinding? = null
     private lateinit var transactionsViewModel: TransactionsViewModel
+    private var idBankMovements : Int = 0
 
     // This property is only valid between onCreateView and
     // onDestroyView.

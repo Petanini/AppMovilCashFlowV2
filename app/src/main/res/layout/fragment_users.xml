@@ -50,13 +50,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="sans-serif-medium"
         android:padding="10dp"
         android:text="1634.50 $"
         android:textColor="#000000"
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.934"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/balanceDivider" />
 
@@ -112,5 +113,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/accountsLabel"
         tools:listitem="@layout/lista_cuenta_card" />
+
+    <TextView
+        android:id="@+id/txtAccName"
+        android:layout_width="154dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginBottom="20dp"
+        android:text="TOTAL CONSOLIDADO:"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/buttonsLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/balanceDivider"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
