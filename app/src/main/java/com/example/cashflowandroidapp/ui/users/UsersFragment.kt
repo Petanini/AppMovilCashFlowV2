@@ -6,17 +6,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.cashflowandroidapp.R
 import com.example.cashflowandroidapp.data.interfaces.RecyclerViewEvent
 import com.example.cashflowandroidapp.data.model.entities.CntBancosResponse
 import com.example.cashflowandroidapp.databinding.FragmentUsersBinding
+import com.example.cashflowandroidapp.ui.shared.SharedViewModel
 
 class UsersFragment : Fragment(), RecyclerViewEvent {
 
     private var _binding: FragmentUsersBinding? = null
     private val userviewmodel: UsersViewModel by viewModels()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
     private var miListener: RecyclerViewEvent = this
     private var miListaCuentas: List<CntBancosResponse>? = null
 
@@ -32,8 +37,6 @@ class UsersFragment : Fragment(), RecyclerViewEvent {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val usersViewModel =
-            ViewModelProvider(this).get(UsersViewModel::class.java)
 
         _binding = FragmentUsersBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -76,8 +79,9 @@ class UsersFragment : Fragment(), RecyclerViewEvent {
         _binding?.viewMovementButton?.setOnClickListener(View.OnClickListener {
             if(idBank == 0){
                 Toast.makeText(requireContext(), "Debes seleccionar un banco", Toast.LENGTH_LONG).show()
-            } else{
-
+            } else {
+                sharedViewModel.setIdBanco(idBank)
+                findNavController().navigate(R.id.action_usersFragment_to_transactionsFragment)
             }
         })
     }
@@ -89,13 +93,13 @@ class UsersFragment : Fragment(), RecyclerViewEvent {
 
     override fun onItemClick(Position: Int) {
         val cuenta = miListaCuentas?.get(Position)
-
         if (cuenta != null) {
             if(_binding != null){
                 _binding!!.txtAccName.text = cuenta.egre_banc_nomb_alte + " :"
                 _binding!!.txtAccName.textSize = 20f
                 _binding!!.balanceAmount.text = cuenta.cuenta_monto + " $"
                 idBank = cuenta.id_egre_banc
+                sharedViewModel.setIdBanco(idBank)
             }
         }
     }

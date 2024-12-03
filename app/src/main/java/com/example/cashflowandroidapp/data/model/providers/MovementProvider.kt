@@ -23,6 +23,15 @@ class MovementProvider {
         return data
     }
 
+    suspend fun getMovementsById(id_banco: Int): List<Movement>{
+
+        var data: List<Movement>
+        runBlocking(Dispatchers.IO){
+            data = imov.getMovimientoBanco(id_banco)
+        }
+        return data
+    }
+
     suspend fun getNaturaleza(): List<Naturaleza>{
         var data: List<Naturaleza>
         runBlocking(Dispatchers.IO){

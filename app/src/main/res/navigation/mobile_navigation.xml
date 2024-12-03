@@ -5,11 +5,24 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/navigation_home">
 
+
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.cashflowandroidapp.ui.users.UsersFragment"
         android:label="@string/nav_usuario"
-        tools:layout="@layout/fragment_users" />
+        tools:layout="@layout/fragment_users">
+
+        <action
+            android:id="@+id/action_usersFragment_to_transactionsFragment"
+            app:destination="@id/navigation_dashboard"
+            app:launchSingleTop="false"
+            app:popUpTo="@id/mobile_navigation"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_navigation_home_self"
+            app:destination="@id/navigation_home" />
+    </fragment>
+
 
     <fragment
         android:id="@+id/navigation_dashboard"

@@ -14,8 +14,8 @@ interface IMovement {
     @GET("getMovimientos")
     suspend fun getMovimientosAll(): List<Movement>
 
-    /*@GET("")
-    suspend fun  getMovimientoBanco(@Query("id_banco") id_banco: Int): List<Movement>*/
+    @GET("getMovimientos/{id_banco}")
+    suspend fun  getMovimientoBanco(@Query("id_banco") id_banco: Int): List<Movement>
 
     @GET("movimientos-bancarios/departamento")
     suspend fun getDepts(): List<Departamento>

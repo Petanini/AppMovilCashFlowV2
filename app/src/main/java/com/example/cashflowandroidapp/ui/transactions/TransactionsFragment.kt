@@ -6,17 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cashflowandroidapp.data.model.entities.Movement
 import com.example.cashflowandroidapp.databinding.FragmentTransactionsBinding
+import com.example.cashflowandroidapp.ui.shared.SharedViewModel
 
 class TransactionsFragment : Fragment() {
 
+    private val sharedViewModel: SharedViewModel by activityViewModels()
     private var _binding: FragmentTransactionsBinding? = null
     private lateinit var transactionsViewModel: TransactionsViewModel
-    private var idBankMovements : Int = 0
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -48,8 +50,17 @@ class TransactionsFragment : Fragment() {
             }
         }
 
-        transactionsViewModel.fetchMovements()
 
+        sharedViewModel.idBanco.observe(viewLifecycleOwner) { idBanco ->
+            if (idBanco != 0) {
+                transactionsViewModel.setIdBanco(idBanco)
+                transactionsViewModel.fetchMovements()
+            }
+        }
+        /*transactionsViewModel.id_banco.observe(viewLifecycleOwner) { idBanco ->
+            transactionsViewModel.fetchMovements()
+            println("ID Banco Observado: $idBanco")
+        }*/
     }
 
 

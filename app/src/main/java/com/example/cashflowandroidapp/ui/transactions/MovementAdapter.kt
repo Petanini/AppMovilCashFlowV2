@@ -17,6 +17,7 @@ class MovementAdapter(private val movements: List<Movement>) :
         val tvTitle: TextView = itemView.findViewById(R.id.tvTitle)
         val tvDate: TextView = itemView.findViewById(R.id.tvDate)
         val tvAmount: TextView = itemView.findViewById(R.id.tvAmount)
+        val tvBankName: TextView = itemView.findViewById(R.id.bankTitle)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovementViewHolder {
@@ -31,11 +32,12 @@ class MovementAdapter(private val movements: List<Movement>) :
         holder.tvTitle.text = movement.concepto
         holder.tvDate.text = movement.fecha
 
-        //  aquei se Configura el monto y se cambia el color  si es ingreso o gasto
+
         holder.tvAmount.text = "${if (movement.tipo == 1) "+" else "-"} ${String.format("%.2f",movement.monto)} $"
         holder.tvAmount.setTextColor(
             holder.itemView.context.getColor(if (movement.tipo == 1) R.color.green else R.color.red)
         )
+        holder.tvBankName.text = movement.bancos.egre_banc_nomb_alte
     }
 
     override fun getItemCount(): Int = movements.size
