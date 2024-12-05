@@ -50,7 +50,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         val btnLogin: Button = binding.loginSend
-        val btnGoogleSignIn: ImageView = binding.googleLogin
+        val btnGoogleSignIn: Button = binding.googleLogin
         val usuario: TextView = binding.loginuser
         val contra: TextView = binding.loginpass
 
