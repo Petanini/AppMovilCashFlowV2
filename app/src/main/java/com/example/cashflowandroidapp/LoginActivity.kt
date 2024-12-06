@@ -33,7 +33,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        supportActionBar?.hide()
         auth = Firebase.auth
 
 
@@ -50,7 +50,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         val btnLogin: Button = binding.loginSend
-        val btnGoogleSignIn: ImageView = binding.googleLogin
+        val btnGoogleSignIn: Button = binding.googleLogin
         val usuario: TextView = binding.loginuser
         val contra: TextView = binding.loginpass
 

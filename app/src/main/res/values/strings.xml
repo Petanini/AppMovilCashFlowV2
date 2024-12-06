@@ -25,6 +25,7 @@
     <string name="hint_correo">Correo</string>
     <string name="hint_contra">Contraseña</string>
     <string name="ingreso">ENTRAR</string>
+    <string name="login_google">Ingresa con Google</string>
     <string name="titulo_balance">BALANCE</string>
     <string name="ingreso_google">O INGRESA CON TU CUENTA GOOGLE:</string>
     <string name="title_activity_login">LoginActivity</string>
