@@ -3,8 +3,8 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-    <string name="titulo_upper_toolbar">REGISTRAR MOVIMIENTO</string>
-    <string name="vermovimientos_mayuscula">VER MOVIMIENTOS</string>
+    <string name="titulo_upper_toolbar">Nuevo Movimientos</string>
+    <string name="vermovimientos_mayuscula">Mis Movimientos</string>
     <string name="cuentas_mayuscula">CUENTAS:</string>
     <string name="mov_tipo_uno">Ingreso</string>
     <string name="mov_tipo_dos">Egreso</string>
