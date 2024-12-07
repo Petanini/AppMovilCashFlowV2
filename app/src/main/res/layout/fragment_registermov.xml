@@ -46,14 +46,16 @@
                     android:layout_height="wrap_content"
                     android:text="@string/mov_tipo_uno"
                     android:buttonTint="#6E63C0"
-                    android:textColor="#6E63C0" />
+                    android:textColor="#6E63C0"
+                    android:tag="1"/>
 
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/mov_tipo_dos"
                     android:buttonTint="#6E63C0"
-                    android:textColor="#6E63C0" />
+                    android:textColor="#6E63C0"
+                    android:tag="2"/>
 
             </RadioGroup>
 

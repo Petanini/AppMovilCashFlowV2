@@ -19,32 +19,49 @@ class RegisterMovViewModel : ViewModel() {
     val listOfDepartamento = MutableLiveData<List<Departamento>?>()
     val listOfCategoria = MutableLiveData<List<Categoria>?>()
     val movementRegistered = MutableLiveData<Movement>()
+    val errorMessage = MutableLiveData<String?>()
 
-    fun fetchNaturaleza(){
+    fun fetchNaturaleza() {
         viewModelScope.launch {
-            val result = regMovProvider.getNaturaleza()
-            listOfNaturaleza.postValue(result)
+            try {
+                val result = regMovProvider.getNaturaleza()
+                listOfNaturaleza.postValue(result)
+            } catch (e: Exception) {
+                errorMessage.postValue("Error al cargar naturalezas: ${e.message}")
+            }
         }
     }
 
-    fun fetchDept(){
+    fun fetchDept() {
         viewModelScope.launch {
-            val result = regMovProvider.getDepartamento()
-            listOfDepartamento.postValue(result)
+            try {
+                val result = regMovProvider.getDepartamento()
+                listOfDepartamento.postValue(result)
+            } catch (e: Exception) {
+                errorMessage.postValue("Error al cargar departamentos: ${e.message}")
+            }
         }
     }
 
-    fun fetchCat(){
+    fun fetchCat() {
         viewModelScope.launch {
-            val result = regMovProvider.getCategoria()
-            listOfCategoria.postValue(result)
+            try {
+                val result = regMovProvider.getCategoria()
+                listOfCategoria.postValue(result)
+            } catch (e: Exception) {
+                errorMessage.postValue("Error al cargar categorías: ${e.message}")
+            }
         }
     }
 
-    fun addMovement(movement: MovementInsert){
+    fun addMovement(movement: MovementInsert) {
         viewModelScope.launch {
-            val result = regMovProvider.createMovement(movement)
-            movementRegistered.postValue(result)
+            try {
+                val result = regMovProvider.createMovement(movement)
+                movementRegistered.postValue(result)
+            } catch (e: Exception) {
+                errorMessage.postValue("Error al registrar movimiento: ${e.message}")
+            }
         }
     }
 

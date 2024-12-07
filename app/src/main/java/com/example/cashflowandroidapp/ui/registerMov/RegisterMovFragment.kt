@@ -9,6 +9,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Spinner
 import android.widget.TextView
@@ -161,34 +162,46 @@ class RegisterMovFragment : Fragment() {
         dateselector = binding.txtDate
         dateselector.setOnClickListener { showDatePickerDialog() }
 
+        registerMovViewModel.errorMessage.observe(viewLifecycleOwner) { error ->
+            error?.let {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
+                registerMovViewModel.errorMessage.postValue(null)
+            }
+        }
+
 
 
         btnGuardar.setOnClickListener {
             if (validarCampos()) {
-                var movimiento = MovementInsert(
-                    fieldConceptos.text.toString(),
-                    idCuenta,
-                    dateselector.text.toString(),
-                    txtMonto.text.toString().toDouble(),
-                    radiosOpt.checkedRadioButtonId
-                )
+                val selectedRadioButton = view?.findViewById<RadioButton>(radiosOpt.checkedRadioButtonId)
+                val selectedTag = selectedRadioButton?.tag as? String
 
-                println("Movimiento a enviar: $movimiento")
-                registerMovViewModel.addMovement(movimiento)
+                if (selectedTag != null) {
+                    val movimiento = MovementInsert(
+                        fieldConceptos.text.toString(),
+                        idCuenta,
+                        dateselector.text.toString(),
+                        txtMonto.text.toString().toDouble(),
+                        selectedTag.toInt()
+                    )
 
-                registerMovViewModel.movementRegistered.observe(viewLifecycleOwner) { result ->
-                    if (result != null) {
+                    println("Movimiento a enviar: $movimiento")
+                    registerMovViewModel.addMovement(movimiento)
 
-                        Toast.makeText(requireContext(), "Movimiento guardado con éxito", Toast.LENGTH_SHORT).show()
-                        fieldConceptos.text.clear()
-                        dateselector.text = ""
-                        txtMonto.text = ""
-                        txtObservaciones.text = ""
-                        radiosOpt.clearCheck()
-                    } else {
-
-                        Toast.makeText(requireContext(), "Error al guardar el movimiento", Toast.LENGTH_SHORT).show()
+                    registerMovViewModel.movementRegistered.observe(viewLifecycleOwner) { result ->
+                        if (result != null) {
+                            Toast.makeText(requireContext(), "Movimiento guardado con éxito", Toast.LENGTH_SHORT).show()
+                            fieldConceptos.text.clear()
+                            dateselector.text = ""
+                            txtMonto.text = ""
+                            txtObservaciones.text = ""
+                            radiosOpt.clearCheck()
+                        } else {
+                            Toast.makeText(requireContext(), "Error al guardar el movimiento", Toast.LENGTH_SHORT).show()
+                        }
                     }
+                } else {
+                    Toast.makeText(requireContext(), "Por favor, selecciona una opción válida", Toast.LENGTH_SHORT).show()
                 }
             } else {
                 Toast.makeText(requireContext(), "Por favor, completa todos los campos correctamente", Toast.LENGTH_SHORT).show()
