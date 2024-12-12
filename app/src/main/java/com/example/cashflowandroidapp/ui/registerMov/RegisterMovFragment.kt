@@ -15,12 +15,15 @@ import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import com.example.cashflowandroidapp.data.model.entities.Categoria
 import com.example.cashflowandroidapp.data.model.entities.CntBancosResponse
 import com.example.cashflowandroidapp.data.model.entities.Movement
 import com.example.cashflowandroidapp.data.model.entities.MovementInsert
 import com.example.cashflowandroidapp.data.model.entities.Naturaleza
 import com.example.cashflowandroidapp.databinding.FragmentRegistermovBinding
+import com.example.cashflowandroidapp.ui.shared.SharedViewModel
 import com.example.cashflowandroidapp.ui.users.UsersViewModel
 
 class RegisterMovFragment : Fragment() {
@@ -28,21 +31,21 @@ class RegisterMovFragment : Fragment() {
     private var _binding: FragmentRegistermovBinding? = null
     private lateinit var dateselector: TextView
     private lateinit var spinnerCuenta: Spinner
-    private lateinit var spinnerNaturaleza: Spinner
+
     private lateinit var spinnerCategoria: Spinner
-    private lateinit var spinnerDepartamento: Spinner
+
     private lateinit var btnGuardar: Button
 
     private lateinit var radiosOpt: RadioGroup
-    private lateinit var txtObservaciones: TextView
+
     private lateinit var txtMonto: TextView
     private lateinit var fieldConceptos: EditText
 
     lateinit var registerMovViewModel: RegisterMovViewModel
+    private val sharedViewModel: SharedViewModel by activityViewModels()
+    private lateinit var uvw : UsersViewModel
 
     private var idCuenta: Int = 0
-    private var idNaturaleza: Int = 0
-    private var idDepartamento: Int = 0
     private var idCategoria: Int = 0
 
 
@@ -62,34 +65,21 @@ class RegisterMovFragment : Fragment() {
         val root: View = binding.root
 
         spinnerCuenta = binding.spCuenta
-        spinnerNaturaleza = binding.spNat
+
         spinnerCategoria = binding.spCat
-        spinnerDepartamento = binding.spDept
+
         btnGuardar = binding.btnGuardar
         radiosOpt = binding.groupOptions
-        txtObservaciones = binding.txtObservaciones
+
         txtMonto = binding.txtMonto
         fieldConceptos = binding.editTextTextMultiLine
 
-        val uvw = UsersViewModel()
-        registerMovViewModel.fetchNaturaleza()
+        uvw = UsersViewModel()
         registerMovViewModel.fetchCat()
-        registerMovViewModel.fetchDept()
+
         uvw.fetchCuentas(1)
 
-        registerMovViewModel.listOfNaturaleza.observe(viewLifecycleOwner) { naturalezaList ->
-            val naturalezaAdapter = naturalezaList?.let {
-                ArrayAdapter(
-                    requireContext(),
-                    R.layout.simple_spinner_item,
-                    it.map { it.egre_natu_opc }
-                )
-            }
-            if (naturalezaAdapter != null) {
-                naturalezaAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            }
-            spinnerNaturaleza.adapter = naturalezaAdapter
-        }
+
 
         registerMovViewModel.listOfCategoria.observe(viewLifecycleOwner) { categoriaList ->
             val categoriaAdapter = categoriaList?.let {
@@ -103,21 +93,28 @@ class RegisterMovFragment : Fragment() {
                 categoriaAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             }
             spinnerCategoria.adapter = categoriaAdapter
+
+            spinnerCategoria.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    val categoriaSeleccionada = categoriaList?.get(position)
+                    val categoriaId = categoriaSeleccionada?.id_egre_cate
+                    if (categoriaId != null){
+                        idCategoria = categoriaId
+                    }
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+
+                }
+            }
         }
 
-        registerMovViewModel.listOfDepartamento.observe(viewLifecycleOwner) { departamentoList ->
-            val departamentoAdapter = departamentoList?.let {
-                ArrayAdapter(
-                    requireContext(),
-                    android.R.layout.simple_spinner_item,
-                    it.map { it.egre_depa_opc }
-                )
-            }
-            if (departamentoAdapter != null) {
-                departamentoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            }
-            spinnerDepartamento.adapter = departamentoAdapter
-        }
+
 
         uvw.listOfCuentas.observe(viewLifecycleOwner){ CuentasList ->
 
@@ -169,6 +166,20 @@ class RegisterMovFragment : Fragment() {
             }
         }
 
+        sharedViewModel.idBanco.observe(viewLifecycleOwner) { idBanco ->
+            if (idBanco != 0) {
+                uvw.listOfCuentas.observe(viewLifecycleOwner) { cuentasList ->
+
+                    val position = cuentasList?.indexOfFirst { it.id_egre_banc == idBanco } ?: -1
+                    if (position != -1) {
+                        spinnerCuenta.setSelection(position)
+                    } else {
+                        Toast.makeText(requireContext(), "Cuenta no encontrada en el listado", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+
 
 
         btnGuardar.setOnClickListener {
@@ -182,7 +193,8 @@ class RegisterMovFragment : Fragment() {
                         idCuenta,
                         dateselector.text.toString(),
                         txtMonto.text.toString().toDouble(),
-                        selectedTag.toInt()
+                        selectedTag.toInt(),
+                        idCategoria
                     )
 
                     println("Movimiento a enviar: $movimiento")
@@ -194,7 +206,6 @@ class RegisterMovFragment : Fragment() {
                             fieldConceptos.text.clear()
                             dateselector.text = ""
                             txtMonto.text = ""
-                            txtObservaciones.text = ""
                             radiosOpt.clearCheck()
                         } else {
                             Toast.makeText(requireContext(), "Error al guardar el movimiento", Toast.LENGTH_SHORT).show()
@@ -219,10 +230,7 @@ class RegisterMovFragment : Fragment() {
 
     fun validarCampos(): Boolean{
         var aproved = true
-        if(txtObservaciones.text.isEmpty()){
-            aproved = false
-            return aproved
-        } else if (txtMonto.text.isEmpty()){
+         if (txtMonto.text.isEmpty()){
             aproved = false
             return aproved
         } else if (dateselector.text.isEmpty()){
@@ -234,6 +242,9 @@ class RegisterMovFragment : Fragment() {
         } else if(idCuenta == 0){
             aproved = false
             return aproved
+        } else if (idCategoria == 0 || idCategoria == -1){
+            aproved = false
+             return aproved
         }
         return aproved
     }

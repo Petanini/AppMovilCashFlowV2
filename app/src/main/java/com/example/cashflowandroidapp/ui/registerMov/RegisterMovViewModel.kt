@@ -15,33 +15,11 @@ import kotlinx.coroutines.launch
 class RegisterMovViewModel : ViewModel() {
 
     private val regMovProvider = MovementProvider()
-    val listOfNaturaleza = MutableLiveData<List<Naturaleza>?>()
-    val listOfDepartamento = MutableLiveData<List<Departamento>?>()
     val listOfCategoria = MutableLiveData<List<Categoria>?>()
     val movementRegistered = MutableLiveData<Movement>()
     val errorMessage = MutableLiveData<String?>()
 
-    fun fetchNaturaleza() {
-        viewModelScope.launch {
-            try {
-                val result = regMovProvider.getNaturaleza()
-                listOfNaturaleza.postValue(result)
-            } catch (e: Exception) {
-                errorMessage.postValue("Error al cargar naturalezas: ${e.message}")
-            }
-        }
-    }
 
-    fun fetchDept() {
-        viewModelScope.launch {
-            try {
-                val result = regMovProvider.getDepartamento()
-                listOfDepartamento.postValue(result)
-            } catch (e: Exception) {
-                errorMessage.postValue("Error al cargar departamentos: ${e.message}")
-            }
-        }
-    }
 
     fun fetchCat() {
         viewModelScope.launch {

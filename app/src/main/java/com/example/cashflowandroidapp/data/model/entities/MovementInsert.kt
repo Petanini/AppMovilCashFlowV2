@@ -6,4 +6,5 @@ data class MovementInsert(
     val fecha: String,
     val monto: Double,
     val tipo: Int,
+    val categoria: Int
 )

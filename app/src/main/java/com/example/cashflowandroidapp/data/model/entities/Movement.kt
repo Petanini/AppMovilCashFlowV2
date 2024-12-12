@@ -7,5 +7,6 @@ data class Movement(
     val fecha: String,
     val monto: Double,
     val tipo: Int,
-    val bancos: CntBancosResponse
+    val bancos: CntBancosResponse,
+    val categorias: Categoria
 )

@@ -32,13 +32,6 @@ class MovementProvider {
         return data
     }
 
-    suspend fun getNaturaleza(): List<Naturaleza>{
-        var data: List<Naturaleza>
-        runBlocking(Dispatchers.IO){
-            data = imov.getNaturaleza()
-        }
-        return data
-    }
 
     suspend fun getCategoria(): List<Categoria>{
         var data: List<Categoria>
@@ -48,13 +41,7 @@ class MovementProvider {
         return data
     }
 
-    suspend fun getDepartamento(): List<Departamento>{
-        var data: List<Departamento>
-        runBlocking(Dispatchers.IO){
-            data = imov.getDepts()
-        }
-        return data
-    }
+
 
     suspend fun createMovement(movement: MovementInsert): Movement{
         var data: Movement

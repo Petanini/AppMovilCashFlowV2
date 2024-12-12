@@ -37,7 +37,8 @@ class MovementAdapter(private val movements: List<Movement>) :
         holder.tvAmount.setTextColor(
             holder.itemView.context.getColor(if (movement.tipo == 1) R.color.green else R.color.red)
         )
-        holder.tvBankName.text = movement.bancos.egre_banc_nomb_alte
+        //holder.tvBankName.text = movement.bancos.egre_banc_nomb_alte
+        holder.tvBankName.text = movement.categorias.egre_cate_opc
     }
 
     override fun getItemCount(): Int = movements.size

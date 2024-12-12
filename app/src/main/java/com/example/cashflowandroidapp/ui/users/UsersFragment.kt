@@ -86,6 +86,14 @@ class UsersFragment : Fragment(), RecyclerViewEvent {
                 findNavController().navigate(R.id.action_usersFragment_to_transactionsFragment)
             }
         })
+
+        _binding?.registerMovementButton?.setOnClickListener(View.OnClickListener {
+            if(idBank == 0){}
+            else{
+                sharedViewModel.setIdBanco(idBank)
+                findNavController().navigate(R.id.action_usersFragment_to_regMovementFragment)
+            }
+        })
     }
 
     override fun onDestroyView() {

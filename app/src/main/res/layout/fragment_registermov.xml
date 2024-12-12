@@ -59,6 +59,22 @@
 
             </RadioGroup>
 
+            <!-- Origen -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/titulo_op_movimientos"
+                android:textSize="16sp"
+                android:textColor="#6E63C0"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp" />
+
+            <Spinner
+                android:id="@+id/spCuenta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp" />
+
             <!-- Observaciones y Monto -->
             <View
                 android:id="@+id/divider2"
@@ -66,19 +82,6 @@
                 android:layout_height="5dp"
                 android:background="?android:attr/listDivider"
                 android:backgroundTint="#2905E8" />
-
-            <EditText
-                android:id="@+id/txt_observaciones"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:backgroundTint="#6E63C0"
-                android:drawableStart="@drawable/observarsmall"
-                android:drawablePadding="8dp"
-                android:hint="@string/hint_observaciones"
-                android:inputType="text"
-                android:padding="12dp"
-                android:textColor="#6E63C0" />
 
             <EditText
                 android:id="@+id/txtMonto"
@@ -108,70 +111,9 @@
                 android:focusable="false"
                 />
 
-            <!-- Origen -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/titulo_op_movimientos"
-                android:textSize="16sp"
-                android:textColor="#6E63C0"
-                android:textStyle="bold"
-                android:layout_marginTop="16dp" />
 
 
-
-            <!-- Naturaleza -->
-            <Spinner
-                android:id="@+id/spCuenta"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/naturaleza"
-                android:textSize="16sp"
-                android:textColor="#6E63C0"
-                android:textStyle="bold"
-                android:layout_marginTop="16dp" />
-
-            <View
-                android:id="@+id/divider4"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider" />
-
-            <!-- Naturaleza -->
-
-            <Spinner
-                android:id="@+id/spNat"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/departamento"
-                android:textSize="16sp"
-                android:textColor="#6E63C0"
-                android:textStyle="bold"
-                android:layout_marginTop="16dp" />
-
-            <View
-                android:id="@+id/divider5"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider" />
-
-            <!-- Naturaleza -->
-            <Spinner
-                android:id="@+id/spDept"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp" />
-
+            <!-- Categoria -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -186,13 +128,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="?android:attr/listDivider" />
-
-            <!-- Naturaleza -->
             <Spinner
                 android:id="@+id/spCat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp" />
+
+
+
 
             <TextView
                 android:layout_width="wrap_content"
@@ -209,9 +152,6 @@
                 android:layout_height="1dp"
                 android:background="?android:attr/listDivider" />
 
-
-            <!-- Botón de Guardar -->
-
             <EditText
                 android:id="@+id/editTextTextMultiLine"
                 android:layout_width="match_parent"
@@ -219,6 +159,11 @@
                 android:ems="10"
                 android:gravity="start|top"
                 android:inputType="textMultiLine" />
+
+
+            <!-- Botón de Guardar -->
+
+
 
             <Button
                 android:id="@+id/btnGuardar"
