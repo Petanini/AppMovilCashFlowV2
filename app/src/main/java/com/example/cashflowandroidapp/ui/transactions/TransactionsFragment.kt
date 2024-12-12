@@ -48,6 +48,24 @@ class TransactionsFragment : Fragment() {
                 adapter = MovementAdapter(listaMovimientos)
                 layoutManager = LinearLayoutManager(requireContext())
             }
+            var posAmount = 0.0
+            var negAmount = 0.0
+
+            for (item in listaMovimientos) {
+                if (item.tipo == 1){
+                    posAmount += item.monto
+                } else{
+                    negAmount += item.monto
+                }
+            }
+
+            val posAmountFormatted = "+ $posAmount $"
+            val negAmountFormatted = "- $negAmount $"
+
+            binding.income.text = posAmountFormatted
+            binding.expense.text = negAmountFormatted
+
+
         }
 
 
@@ -56,6 +74,11 @@ class TransactionsFragment : Fragment() {
                 transactionsViewModel.setIdBanco(idBanco)
                 transactionsViewModel.fetchMovements()
             }
+        }
+
+        sharedViewModel.montoBanco.observe(viewLifecycleOwner){montoBanco ->
+            transactionsViewModel.setBancoMonto(montoBanco)
+            binding.totalBalance.text = transactionsViewModel.banco_monto.value
         }
         /*transactionsViewModel.id_banco.observe(viewLifecycleOwner) { idBanco ->
             transactionsViewModel.fetchMovements()

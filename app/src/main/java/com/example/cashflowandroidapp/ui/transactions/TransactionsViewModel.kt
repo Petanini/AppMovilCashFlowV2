@@ -14,13 +14,19 @@ class TransactionsViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
     private val movProvider = MovementProvider()
     val listOfMovements = MutableLiveData<List<Movement>>()
     private val _idBanco = savedStateHandle.getLiveData<Int>("id_banco", 0)
+    private val _bancoMonto = savedStateHandle.getLiveData<String>("monto_banco", "0")
 
     val id_banco: LiveData<Int> = _idBanco
+    val banco_monto: LiveData<String> = _bancoMonto
 
     fun setIdBanco(id: Int) {
         println("setIdBanco")
         println(id)
         _idBanco.value = id
+    }
+
+    fun setBancoMonto(monto: String){
+        _bancoMonto.value = monto
     }
 
     fun fetchMovements() {

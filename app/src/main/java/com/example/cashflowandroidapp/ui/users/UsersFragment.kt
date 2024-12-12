@@ -26,6 +26,7 @@ class UsersFragment : Fragment(), RecyclerViewEvent {
     private var miListaCuentas: List<CntBancosResponse>? = null
 
     private var idBank : Int = 0
+    private var montoBank: String = "0"
 
 
     // This property is only valid between onCreateView and
@@ -81,6 +82,7 @@ class UsersFragment : Fragment(), RecyclerViewEvent {
                 Toast.makeText(requireContext(), "Debes seleccionar un banco", Toast.LENGTH_LONG).show()
             } else {
                 sharedViewModel.setIdBanco(idBank)
+                sharedViewModel.setMontoBanco(montoBank)
                 findNavController().navigate(R.id.action_usersFragment_to_transactionsFragment)
             }
         })
@@ -99,7 +101,9 @@ class UsersFragment : Fragment(), RecyclerViewEvent {
                 _binding!!.txtAccName.textSize = 20f
                 _binding!!.balanceAmount.text = cuenta.cuenta_monto + " $"
                 idBank = cuenta.id_egre_banc
+                montoBank = cuenta.cuenta_monto+" $"
                 sharedViewModel.setIdBanco(idBank)
+                sharedViewModel.setMontoBanco(cuenta.cuenta_monto+" $")
             }
         }
     }
