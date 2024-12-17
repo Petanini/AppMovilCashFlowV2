@@ -73,6 +73,8 @@ class TransactionsFragment : Fragment() {
             if (idBanco != 0) {
                 transactionsViewModel.setIdBanco(idBanco)
                 transactionsViewModel.fetchMovements()
+            } else {
+                transactionsViewModel.fetchMovements()
             }
         }
 

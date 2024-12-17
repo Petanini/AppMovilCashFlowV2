@@ -67,6 +67,7 @@ class UsersFragment : Fragment(), RecyclerViewEvent {
 
 
             binding.balanceAmount.text = String.format("%.2f", montoTotal) + " $"
+            sharedViewModel.setMontoBanco(String.format("%.2f", montoTotal) + " $")
 
 
             binding.recyclerViewCuentas.apply {
